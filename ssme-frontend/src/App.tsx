@@ -2,11 +2,18 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
+
+// Layouts y Rutas
+import { ProtectedRoute } from './router/ProtectedRoute';
 import { CreateRecordPage } from './features/clinical-records/pages/CreateRecordPage';
 import { RecordDetailPage } from './features/clinical-records/pages/RecordDetailPage';
-import { RecordsListPage } from './features/clinical-records/pages/RecordsListPage'; // Importar la nueva página
+import { RecordsListPage } from './features/clinical-records/pages/RecordsListPage';
+import { RegisterPage } from './features/auth/pages/RegisterPage';
 import { AppointmentModal } from './features/scheduling/components/AppointmentModal';
 import './index.css';
+
+// Placeholder para la página de Login
+const LoginPage = () => <div style={{ padding: '2rem' }}><h2 >Página de Inicio de Sesión (Placeholder)</h2></div>;
 
 const queryClient = new QueryClient();
 
@@ -15,15 +22,21 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/records" element={<RecordsListPage />} />
-          <Route path="/records/new" element={<CreateRecordPage />} />
-          <Route path="/records/:recordId" element={<RecordDetailPage />} />
-          {/* Ahora la ruta raíz redirige a la lista de expedientes */}
-          <Route path="/" element={<Navigate to="/records" replace />} />
+          {/* Rutas Públicas */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          {/* Rutas Protegidas */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/records" element={<RecordsListPage />} />
+            <Route path="/records/new" element={<CreateRecordPage />} />
+            <Route path="/records/:recordId" element={<RecordDetailPage />} />
+            <Route path="/" element={<Navigate to="/records" replace />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-right" />
-      <AppointmentModal /> {/* <-- Añadir el modal aquí */}
+      <AppointmentModal />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
