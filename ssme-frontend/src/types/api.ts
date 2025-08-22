@@ -40,3 +40,11 @@ export interface AppointmentResponse {
   reason: string;
   status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
 }
+
+// Contrato con el endpoint de auditoría
+export interface AuditLogResponse {
+  id: number;
+  user_id: number; // El backend devuelve un entero
+  action: 'CREATE' | 'READ' | 'UPDATE';
+  timestamp: string; // ISO 8601
+}
