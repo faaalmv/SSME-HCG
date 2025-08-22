@@ -22,7 +22,8 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      authLogin(data.user, data.access_token, data.refresh_token, data.expires_in);
+      // Ahora pasamos ambos tokens al store
+      authLogin(data.user, data.access_token, data.refresh_token);
       navigate('/records');
       toast.success('¡Bienvenido!');
     },
