@@ -6,4 +6,4 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-app.include_router(clinical_record_endpoints.router, prefix="/api/v1/records", tags=["clinical-records"])
+app.include_router(clinical_record_endpoints.router, prefix="/records", tags=["clinical-records"])
