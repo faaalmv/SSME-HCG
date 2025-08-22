@@ -23,3 +23,20 @@ export interface SummarizeResponse {
 }
 
 export type AllRecordsResponse = ClinicalRecordResponse[];
+
+// Contrato con scheduling-service
+export interface CreateAppointmentPayload {
+  patient_id: string;
+  clinical_record_id: number;
+  appointment_time: string; // ISO 8601
+  reason: string;
+}
+
+export interface AppointmentResponse {
+  id: number;
+  patient_id: string;
+  clinical_record_id: number;
+  appointment_time: string;
+  reason: string;
+  status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
+}
