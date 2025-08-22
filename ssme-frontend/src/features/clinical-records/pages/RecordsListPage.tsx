@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGetAllRecords } from '../hooks/useGetAllRecords';
 import { format } from 'date-fns';
+import { Can } from '../../auth/components/Can';
+import { PERMISSIONS } from '../../../lib/permissions';
 
 const listVariants = {
   hidden: { opacity: 0 },
@@ -47,9 +49,11 @@ export const RecordsListPage = () => {
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <h1 style={{ fontSize: '1.875rem', fontWeight: '700' }}>Expedientes Clínicos</h1>
-        <Link to="/records/new" style={{ padding: '0.5rem 1rem', backgroundColor: '#3b82f6', color: 'white', borderRadius: '0.375rem', textDecoration: 'none' }}>
-          + Nuevo Expediente
-        </Link>
+        <Can perform={PERMISSIONS.CREATE_RECORD}>
+          <Link to="/records/new" style={{ padding: '0.5rem 1rem', backgroundColor: '#3b82f6', color: 'white', borderRadius: '0.375rem', textDecoration: 'none' }}>
+            + Nuevo Expediente
+          </Link>
+        </Can>
       </div>
       <input
         type="text"
