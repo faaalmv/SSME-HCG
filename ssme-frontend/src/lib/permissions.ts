@@ -10,6 +10,7 @@ export const PERMISSIONS = {
   VIEW_RECORDS: 'records:view',
   SCHEDULE_APPOINTMENT: 'appointments:schedule',
   CANCEL_APPOINTPOINTMENT: 'appointments:cancel',
+  VIEW_AUDIT_TRAIL: 'audit:view',
 } as const;
 
 type Role = typeof ROLES[keyof typeof ROLES];
