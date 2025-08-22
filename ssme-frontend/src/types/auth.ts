@@ -19,3 +19,16 @@ export interface UserResponse {
   role: 'employee' | 'medical_staff';
   is_active: boolean;
 }
+
+export const LoginSchema = z.object({
+  email: z.string().email('Correo electrónico no válido'),
+  password: z.string().min(1, 'La contraseña no puede estar vacía'),
+});
+
+export type LoginPayload = z.infer<typeof LoginSchema>;
+
+export interface LoginResponse {
+  access_token: string;
+  token_type: 'bearer';
+  user: UserResponse;
+}
