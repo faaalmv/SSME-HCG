@@ -74,3 +74,23 @@ sequenceDiagram
     API-&gt;&gt;AUTH: Reintenta la petición original (GET /recurso)
     AUTH--&gt;&gt;API: Respuesta 200 (Éxito)
     API--&gt;&gt;C: Devuelve los datos solicitados
+
+## 4. Control de Acceso (RBAC)
+
+Utilizamos un sistema declarativo para gestionar los permisos.
+
+    Fuente de Verdad: src/lib/permissions.ts define todos los roles y qué permisos tiene cada uno.
+
+    Componente <Can />: Para ocultar o mostrar elementos de la UI de forma condicional.
+    JavaScript
+
+<Can perform={PERMISSIONS.CREATE_RECORD}>
+  <Button>Nuevo Expediente</Button>
+</Can>
+
+Componente <ProtectedRoute />: Para proteger rutas completas según el rol del usuario.
+JavaScript
+
+    <Route element={<ProtectedRoute allowedRoles={[ROLES.MEDICAL_STAFF]} />}>
+      <Route path="/records/new" element={<CreateRecordPage />} />
+    </Route>
