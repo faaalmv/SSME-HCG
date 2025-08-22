@@ -9,6 +9,19 @@ services:
       - ./services/user_service:/app
     env_file:
       - .env
+    depends_on:
+      - db
+
+  clinical-record-service:
+    build: ./services/clinical_record_service
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./services/clinical_record_service:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
 
   db:
     image: postgres:15
