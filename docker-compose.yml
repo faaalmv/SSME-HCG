@@ -32,6 +32,17 @@ services:
     env_file:
       - ./services/inference_service/.env
 
+  scheduling-service:
+    build: ./services/scheduling_service
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./services/scheduling_service:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
   db:
     image: postgres:15
     volumes:
