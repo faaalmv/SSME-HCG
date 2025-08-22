@@ -1,22 +1,10 @@
-import { BrowserRouter, Routes, Route, useParams, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
 import { CreateRecordPage } from './features/clinical-records/pages/CreateRecordPage';
+import { RecordDetailPage } from './features/clinical-records/pages/RecordDetailPage'; // Importar el componente real
 import './index.css';
-
-// Placeholder para la página de detalle
-const RecordDetailPage = () => {
-  const { recordId } = useParams();
-  // En un futuro, aquí usarías:
-  // const { data, isLoading } = useQuery({ queryKey: ['clinicalRecord', recordId], queryFn: () => fetchRecordById(recordId) });
-  return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-        <h1>Detalle del Expediente</h1>
-        <p>Mostrando expediente con ID: <strong>{recordId}</strong></p>
-    </div>
-  );
-};
 
 const queryClient = new QueryClient();
 
