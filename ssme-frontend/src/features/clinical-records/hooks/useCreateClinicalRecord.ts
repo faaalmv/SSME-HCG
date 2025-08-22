@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 // import { useNavigate } from 'react-router-dom'; // Descomentar cuando se implemente el routing
-import apiClient from '../lib/axios';
-import { CreateClinicalRecordPayload, ClinicalRecordResponse } from '../types/api';
+import apiClient from '../../lib/axios';
+import { CreateClinicalRecordPayload, ClinicalRecordResponse } from '../../types/api';
 
 const createRecord = async (payload: CreateClinicalRecordPayload): Promise<ClinicalRecordResponse> => {
   // La URL debe coincidir con la regla de Traefik
