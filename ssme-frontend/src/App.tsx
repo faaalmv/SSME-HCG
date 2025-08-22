@@ -12,8 +12,8 @@ import { RegisterPage } from './features/auth/pages/RegisterPage';
 import { AppointmentModal } from './features/scheduling/components/AppointmentModal';
 import './index.css';
 
-// Placeholder para la página de Login
-const LoginPage = () => <div style={{ padding: '2rem' }}><h2 >Página de Inicio de Sesión (Placeholder)</h2></div>;
+// Importar la página real
+import { LoginPage } from './features/auth/pages/LoginPage';
 
 const queryClient = new QueryClient();
 
