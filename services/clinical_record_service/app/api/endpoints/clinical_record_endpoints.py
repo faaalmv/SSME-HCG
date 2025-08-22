@@ -6,6 +6,7 @@ from app.services.clinical_record_service import ClinicalRecordService
 from app.repositories.clinical_record_repository import ClinicalRecordRepository
 from app.repositories.audit_log_repository import AuditLogRepository
 from app.schemas.clinical_record import ClinicalRecord, ClinicalRecordCreate
+from app.schemas.audit_log import AuditLog # Importar el esquema de AuditLog
 
 router = APIRouter()
 
@@ -19,6 +20,11 @@ clinical_record_service = ClinicalRecordService(clinical_record_repository, audi
 def get_all_records(db: Session = Depends(get_db)):
     """Retrieve all clinical records."""
     return clinical_record_service.get_all_records(db=db)
+
+@router.get("/{record_id}/audit", response_model=List[AuditLog])
+def get_record_audit_trail(record_id: int, db: Session = Depends(get_db)):
+    """Retrieve the audit trail for a specific clinical record."""
+    return clinical_record_service.get_audit_trail_for_record(db=db, record_id=record_id)
 
 # ... (endpoints existentes de crear y obtener por id) ...
 @router.post("/", response_model=ClinicalRecord, status_code=201)
