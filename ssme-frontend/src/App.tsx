@@ -32,9 +32,10 @@ function App() {
 
           {/* Rutas Protegidas */}
           <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} /> {/* <-- Nueva ruta */}
             <Route path="/records" element={<RecordsListPage />} />
             <Route path="/records/:recordId" element={<RecordDetailPage />} />
-            <Route path="/" element={<Navigate to="/records" replace />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} /> {/* <-- Nueva redirección */}
 
             {/* Rutas anidadas con protección específica de rol */}
             <Route element={<ProtectedRoute allowedRoles={[ROLES.MEDICAL_STAFF]} />}>
