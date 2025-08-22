@@ -1,47 +1,67 @@
 version: '3.8'
 
 services:
+  api-gateway:
+    image: traefik:v2.10
+    command: 
+      - --api.insecure=true
+      - --providers.docker
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   user-service:
     build: ./services/user_service
-    ports:
-      - "8000:8000"
     volumes:
       - ./services/user_service:/app
     env_file:
       - .env
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.user-service.rule=PathPrefix(`/api/users`)"
+      - "traefik.http.services.user-service.loadbalancer.server.port=8000"
 
   clinical-record-service:
     build: ./services/clinical_record_service
-    ports:
-      - "8001:8001"
     volumes:
       - ./services/clinical_record_service:/app
     env_file:
       - .env
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.clinical-record-service.rule=PathPrefix(`/api/records`)"
+      - "traefik.http.services.clinical-record-service.loadbalancer.server.port=8001"
 
   inference-service:
     build: ./services/inference_service
-    ports:
-      - "8002:8000"
     volumes:
       - ./services/inference_service:/app
     env_file:
       - ./services/inference_service/.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.inference-service.rule=PathPrefix(`/api/inference`)"
+      - "traefik.http.services.inference-service.loadbalancer.server.port=8000"
 
   scheduling-service:
     build: ./services/scheduling_service
-    ports:
-      - "8003:8000"
     volumes:
       - ./services/scheduling_service:/app
     env_file:
       - .env
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.scheduling-service.rule=PathPrefix(`/api/appointments`)"
+      - "traefik.http.services.scheduling-service.loadbalancer.server.port=8000"
 
   db:
     image: postgres:15
