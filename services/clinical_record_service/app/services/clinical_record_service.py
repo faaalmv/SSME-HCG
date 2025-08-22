@@ -54,3 +54,7 @@ class ClinicalRecordService:
         """Get the audit trail for a specific clinical record."""
         # En el futuro, podríamos verificar aquí si el usuario que solicita tiene permisos para ver la auditoría.
         return self.audit_log_repository.get_by_record_id(db, record_id)
+
+    def get_recent_activity_for_user(self, db: Session, user_id: int, limit: int) -> list[AuditLog]:
+        """Get recent activity for a user."""
+        return self.audit_log_repository.get_recent_for_user(db, user_id=user_id, limit=limit)
