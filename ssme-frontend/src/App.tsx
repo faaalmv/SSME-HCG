@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import { CreateRecordPage } from './features/clinical-records/pages/CreateRecordPage';
 import { RecordDetailPage } from './features/clinical-records/pages/RecordDetailPage';
 import { RecordsListPage } from './features/clinical-records/pages/RecordsListPage'; // Importar la nueva página
+import { AppointmentModal } from './features/scheduling/components/AppointmentModal';
 import './index.css';
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <Toaster position="bottom-right" />
+      <AppointmentModal /> {/* <-- Añadir el modal aquí */}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
