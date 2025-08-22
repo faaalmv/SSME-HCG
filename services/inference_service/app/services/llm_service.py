@@ -19,7 +19,7 @@ Resumen clínico:"""
             "model": "qwen/qwen3-4b-thinking-2507",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.3,
-            "max_tokens": 150
+            "max_tokens": 400
         }
 
         # PASO 2: Aumentar el timeout a 60 segundos
