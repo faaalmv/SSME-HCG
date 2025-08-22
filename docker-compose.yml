@@ -23,6 +23,13 @@ services:
     depends_on:
       - db
 
+  inference-service:
+    build: ./services/inference_service
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./services/inference_service:/app
+
   db:
     image: postgres:15
     volumes:
