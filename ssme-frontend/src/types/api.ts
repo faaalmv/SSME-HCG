@@ -49,13 +49,18 @@ export interface AuditLogResponse {
   timestamp: string; // ISO 8601
 }
 
-// Contrato con el endpoint de análisis de IA
-export interface AIAnalysisPayload {
-  symptoms: string;
+// Tipos específicos para los widgets del dashboard
+export interface DashboardAppointment {
+  id: number;
+  appointment_time: string;
+  patient_name: string; // Se necesita el nombre del paciente
+  clinical_record_id: number;
 }
 
-export interface AIAnalysisResponse {
-  possible_conditions: string[];
-  suggested_questions: string[];
-  recommended_tests: string[];
+export interface DashboardActivityLog {
+  id: number;
+  action: 'CREATE' | 'READ';
+  timestamp: string;
+  record_id: number;
+  patient_name: string; // Asumimos que el backend lo unirá
 }
