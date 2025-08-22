@@ -7,11 +7,13 @@ class LLMService:
         self.llm_server_url = llm_server_url
 
     async def generate_summary(self, text_input: str) -> str:
-        prompt = f"""Eres un asistente médico. Tu tarea es tomar la siguiente descripción de síntomas de un paciente y generar un resumen clínico conciso en un solo párrafo. No añadas saludos ni texto introductorio. Solo el resumen.
+        prompt = f"""Eres un experto en la redacción de resúmenes clínicos. Analiza los siguientes síntomas y genera un único párrafo que los resuma de manera profesional.
+Tu respuesta DEBE contener ÚNICAMENTE el párrafo del resumen clínico. No debes incluir ningún texto de razonamiento, etiquetas XML/HTML como '<think>', ni preámbulos.
 
-Síntomas: {text_input}
+Síntomas del paciente:
+{text_input}
 
-Resumen:"""
+Resumen clínico:"""
 
         payload = {
             "model": "qwen/qwen3-4b-thinking-2507",
