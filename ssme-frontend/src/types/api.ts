@@ -48,3 +48,14 @@ export interface AuditLogResponse {
   action: 'CREATE' | 'READ' | 'UPDATE';
   timestamp: string; // ISO 8601
 }
+
+// Contrato con el endpoint de análisis de IA
+export interface AIAnalysisPayload {
+  symptoms: string;
+}
+
+export interface AIAnalysisResponse {
+  possible_conditions: string[];
+  suggested_questions: string[];
+  recommended_tests: string[];
+}
