@@ -22,7 +22,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      authLogin(data.user, data.access_token);
+      authLogin(data.user, data.access_token, data.refresh_token, data.expires_in);
       navigate('/records');
       toast.success('¡Bienvenido!');
     },
