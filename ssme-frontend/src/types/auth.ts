@@ -29,8 +29,11 @@ export type LoginPayload = z.infer<typeof LoginSchema>;
 
 export interface LoginResponse {
   access_token: string;
-  refresh_token: string;
+  refresh_token: string; // Nuevo
   token_type: 'bearer';
   user: UserResponse;
-  expires_in: number; // Add this field
+}
+
+export interface RefreshResponse {
+  access_token: string;
 }
