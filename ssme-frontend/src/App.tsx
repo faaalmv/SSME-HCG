@@ -13,6 +13,7 @@ import { LoginPage } from './features/auth/pages/LoginPage';
 import { AppointmentModal } from './features/scheduling/components/AppointmentModal';
 import { ROLES } from './lib/permissions';
 import './index.css';
+import { DashboardPage } from './features/dashboard/pages/DashboardPage';
 
 // Placeholder para la página de Acceso No Autorizado
 const UnauthorizedPage = () => <div style={{ padding: '2rem' }}><h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '1rem' }}>403 - Acceso no autorizado</h2><p>No tienes permiso para ver esta página.</p></div>;
