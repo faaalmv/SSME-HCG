@@ -9,7 +9,11 @@ import { useCreateAppointment } from '../hooks/useCreateAppointment';
 import { CreateAppointmentPayload } from '../../../types/api';
 import { toast } from 'react-hot-toast';
 
-export const AppointmentModal = () => {
+const AppointmentModal = () => {
+  // ... existing code ...
+};
+
+export default AppointmentModal;
   const { isOpen, closeModal, recordId, patientId } = useAppointmentModalStore();
   const { mutate, isPending } = useCreateAppointment();
   
