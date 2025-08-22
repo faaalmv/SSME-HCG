@@ -48,3 +48,16 @@ async def update_appointment_status(
 ):
     """Update an appointment's status."""
     return service.update_appointment(db, appointment_id, appointment_update)
+
+
+@router.get("/me/upcoming", response_model=List[Appointment])
+def get_my_upcoming_appointments(
+    limit: int = 5,
+    db: Session = Depends(get_db),
+    service: AppointmentService = Depends(get_appointment_service)
+):
+    """Retrieve the next upcoming appointments for the current user."""
+    # NOTA: El user_id está hardcodeado. En una implementación real,
+    # se extraería de un token JWT decodificado.
+    current_user_id = 1 
+    return service.get_upcoming_appointments_for_user(db=db, user_id=current_user_id, limit=limit)
