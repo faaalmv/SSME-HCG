@@ -24,7 +24,7 @@ export const useLogin = () => {
     onSuccess: (data) => {
       // Ahora pasamos ambos tokens al store
       authLogin(data.user, data.access_token, data.refresh_token);
-      navigate('/records');
+      navigate('/dashboard'); // <-- Nuevo destino
       toast.success('¡Bienvenido!');
     },
     onError: () => {
