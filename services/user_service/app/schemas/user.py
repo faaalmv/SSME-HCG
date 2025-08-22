@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, EmailStr
 from app.models.user import UserRole
 
@@ -15,9 +16,12 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
+# --- ESQUEMAS ACTUALIZADOS Y NUEVOS ---
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+class Token(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str
+    user: User
