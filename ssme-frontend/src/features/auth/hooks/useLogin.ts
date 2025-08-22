@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import * as Sentry from '@sentry/react'; // <-- Importar Sentry
 import apiClient from '../../../lib/axios';
 import { useAuthStore } from '../../../stores/useAuthStore';
 import { LoginPayload, LoginResponse } from '../../../types/auth';
@@ -24,7 +25,13 @@ export const useLogin = () => {
     onSuccess: (data) => {
       // Ahora pasamos ambos tokens al store
       authLogin(data.user, data.access_token, data.refresh_token);
-      navigate('/dashboard'); // <-- Nuevo destino
+      
+      // Identificar al usuario en Sentry
+      if (import.meta.env.PROD) {
+        Sentry.setUser({ id: String(data.user.id), email: data.user.email });
+      }
+      
+      navigate('/dashboard');
       toast.success('¡Bienvenido!');
     },
     onError: () => {
