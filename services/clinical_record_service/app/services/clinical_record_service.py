@@ -43,3 +43,9 @@ class ClinicalRecordService:
         self.audit_log_repository.create(db, log_create)
 
         return db_record
+
+    def get_all_records(self, db: Session) -> list[ClinicalRecord]:
+        """Get all clinical records."""
+        # En el futuro, aquí se podría añadir lógica de paginación o filtros complejos.
+        # Por ahora, no se requiere auditoría para la acción de listar.
+        return self.clinical_record_repository.get_all(db)

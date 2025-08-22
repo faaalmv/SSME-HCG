@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List # Asegúrate de que List esté importado
 from app.database import get_db
 from app.services.clinical_record_service import ClinicalRecordService
 from app.repositories.clinical_record_repository import ClinicalRecordRepository
@@ -8,10 +9,18 @@ from app.schemas.clinical_record import ClinicalRecord, ClinicalRecordCreate
 
 router = APIRouter()
 
+# ... (repositorios y servicio existentes) ...
 clinical_record_repository = ClinicalRecordRepository()
 audit_log_repository = AuditLogRepository()
 clinical_record_service = ClinicalRecordService(clinical_record_repository, audit_log_repository)
 
+# NUEVO ENDPOINT
+@router.get("/", response_model=List[ClinicalRecord])
+def get_all_records(db: Session = Depends(get_db)):
+    """Retrieve all clinical records."""
+    return clinical_record_service.get_all_records(db=db)
+
+# ... (endpoints existentes de crear y obtener por id) ...
 @router.post("/", response_model=ClinicalRecord, status_code=201)
 def create_record(record: ClinicalRecordCreate, medical_staff_id: int, db: Session = Depends(get_db)):
     """

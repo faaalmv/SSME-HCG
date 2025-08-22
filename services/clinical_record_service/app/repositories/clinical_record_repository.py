@@ -16,3 +16,7 @@ class ClinicalRecordRepository:
     def get_by_id(self, db: Session, record_id: int) -> ClinicalRecord | None:
         """Get a clinical record by id."""
         return db.query(ClinicalRecord).filter(ClinicalRecord.id == record_id).first()
+
+    def get_all(self, db: Session) -> list[ClinicalRecord]:
+        """Get all clinical records."""
+        return db.query(ClinicalRecord).order_by(ClinicalRecord.created_at.desc()).all()
