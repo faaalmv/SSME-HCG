@@ -1,4 +1,5 @@
 from typing import List
+from datetime import datetime # Asegúrate de importar datetime
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
@@ -28,3 +29,7 @@ class AppointmentService:
         appointment = self.get_appointment(db, appointment_id)
         update_data = appointment_update.dict(exclude_unset=True)
         return self.repository.update(db, appointment, update_data)
+
+    def get_upcoming_appointments_for_user(self, db: Session, user_id: int, limit: int) -> List[AppointmentModel]:
+        """Get upcoming appointments for a user."""
+        return self.repository.get_upcoming_for_user(db, user_id=user_id, limit=limit)

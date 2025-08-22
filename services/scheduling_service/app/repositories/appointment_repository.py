@@ -26,3 +26,10 @@ class AppointmentRepository:
         db.commit()
         db.refresh(appointment)
         return appointment
+
+    def get_upcoming_for_user(self, db: Session, user_id: int, limit: int = 5) -> List[AppointmentModel]:
+        """Get upcoming appointments for a specific user."""
+        return db.query(AppointmentModel).filter(
+            AppointmentModel.medical_staff_id == user_id,
+            AppointmentModel.appointment_time >= datetime.utcnow()
+        ).order_by(AppointmentModel.appointment_time.asc()).limit(limit).all()
