@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class InferenceRequest(BaseModel):
-    text_input: str
+    symptoms: str
 
 class InferenceResponse(BaseModel):
     summary: str
