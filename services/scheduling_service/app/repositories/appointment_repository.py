@@ -19,3 +19,10 @@ class AppointmentRepository:
 
     def get_by_patient_id(self, db: Session, patient_id: int) -> List[AppointmentModel]:
         return db.query(AppointmentModel).filter(AppointmentModel.patient_id == patient_id).all()
+
+    def update(self, db: Session, appointment: AppointmentModel, update_data: dict) -> AppointmentModel:
+        for key, value in update_data.items():
+            setattr(appointment, key, value)
+        db.commit()
+        db.refresh(appointment)
+        return appointment
