@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGetAppointmentsForPatient } from '../hooks/useGetAppointmentsForPatient';
+import { useCancelAppointment } from '../hooks/useCancelAppointment';
 import { AppointmentCard } from './AppointmentCard';
 import { AppointmentResponse } from '../../../types/api';
+import { toast } from 'react-hot-toast';
 
 const AppointmentsSkeleton = () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -14,7 +16,18 @@ const AppointmentsSkeleton = () => (
 
 export const PatientAppointmentsList = ({ patientId }: { patientId: string }) => {
   const { data: appointments, isLoading, isError } = useGetAppointmentsForPatient(patientId);
+  const { mutate: cancelAppointment } = useCancelAppointment(patientId);
 
+  const handleCancel = (appointmentId: number) => {
+    if (window.confirm("¿Está seguro de que desea cancelar esta cita? Esta acción no se puede deshacer.")) {
+      cancelAppointment(appointmentId, {
+        onSuccess: () => {
+          toast.success('Cita cancelada.');
+        },
+      });
+    }
+  };
+  
   const { upcoming, past } = useMemo(() => {
     if (!appointments) return { upcoming: [], past: [] };
     const now = new Date();
@@ -35,6 +48,7 @@ export const PatientAppointmentsList = ({ patientId }: { patientId: string }) =>
     return { upcoming: upcomingAppointments, past: pastAppointments };
   }, [appointments]);
 
+  if (isLoading) return <div>Cargando citas...</div>;
   if (isError) return <div style={{ color: '#ef4444' }}>Error al cargar las citas.</div>;
 
   return (
@@ -45,7 +59,7 @@ export const PatientAppointmentsList = ({ patientId }: { patientId: string }) =>
           upcoming.length > 0 ? (
             <motion.div layout style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <AnimatePresence>
-                {upcoming.map(app => <AppointmentCard key={app.id} appointment={app} />)}
+                {upcoming.map(app => <AppointmentCard key={app.id} appointment={app} onCancel={handleCancel} />)}
               </AnimatePresence>
             </motion.div>
           ) : (
@@ -58,7 +72,7 @@ export const PatientAppointmentsList = ({ patientId }: { patientId: string }) =>
         {isLoading ? <AppointmentsSkeleton /> : (
           past.length > 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {past.map(app => <AppointmentCard key={app.id} appointment={app} />)}
+              {past.map(app => <AppointmentCard key={app.id} appointment={app} onCancel={handleCancel} />)}
             </div>
           ) : (
             <p style={{ color: '#6b7280' }}>No hay citas en el historial.</p>
