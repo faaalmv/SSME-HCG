@@ -4,6 +4,9 @@ import { useGetClinicalRecord } from './ssme-frontend/src/features/clinical-reco
 import { format } from 'date-fns';
 import { useAppointmentModalStore } from './ssme-frontend/src/stores/useAppointmentModalStore';
 import { PatientAppointmentsList } from './ssme-frontend/src/features/scheduling/components/PatientAppointmentsList'; // Importar el nuevo componente
+import { Can } from './ssme-frontend/src/features/auth/components/Can';
+import { PERMISSIONS } from './ssme-frontend/src/lib/permissions';
+import { RecordAuditTrail } from './ssme-frontend/src/features/audit/components/RecordAuditTrail';
 
 // Componente de esqueleto reutilizable para la página de detalle
 const RecordSkeleton = () => (
@@ -72,6 +75,10 @@ export const RecordDetailPage = () => {
                 </div>
                 <PatientAppointmentsList patientId={record.patient_id} />
             </div>
+
+            <Can perform={PERMISSIONS.VIEW_AUDIT_TRAIL}>
+              {recordId && <RecordAuditTrail recordId={recordId} />}
+            </Can>
           </motion.div>
         )}
       </AnimatePresence>
