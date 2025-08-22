@@ -49,3 +49,8 @@ class ClinicalRecordService:
         # En el futuro, aquí se podría añadir lógica de paginación o filtros complejos.
         # Por ahora, no se requiere auditoría para la acción de listar.
         return self.clinical_record_repository.get_all(db)
+
+    def get_audit_trail_for_record(self, db: Session, record_id: int) -> list[AuditLog]:
+        """Get the audit trail for a specific clinical record."""
+        # En el futuro, podríamos verificar aquí si el usuario que solicita tiene permisos para ver la auditoría.
+        return self.audit_log_repository.get_by_record_id(db, record_id)
