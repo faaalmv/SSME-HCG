@@ -21,6 +21,7 @@ services:
       - .env
     depends_on:
       - db
+    command: /usr/local/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.user-service.rule=PathPrefix(`/api/users`)"
