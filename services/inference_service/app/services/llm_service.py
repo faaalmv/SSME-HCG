@@ -7,22 +7,21 @@ class LLMService:
         self.llm_server_url = llm_server_url
 
     async def generate_summary(self, text_input: str) -> str:
-        prompt = f"""Eres un experto en la redacción de resúmenes clínicos. Analiza los siguientes síntomas y genera un único párrafo que los resuma de manera profesional.
-Tu respuesta DEBE contener ÚNICAMENTE el párrafo del resumen clínico. No debes incluir ningún texto de razonamiento, etiquetas XML/HTML como '<think>', ni preámbulos.
-
-Síntomas del paciente:
-{text_input}
-
+        # PASO 3: Prompt optimizado para un modelo Instruct como Phi-3
+        prompt = f"""<|user|>
+Analiza los siguientes síntomas y genera un único párrafo que los resuma de manera profesional en español. Tu respuesta debe ser únicamente el resumen clínico.
+Síntomas: {text_input}
+<|assistant|>
 Resumen clínico:"""
 
         payload = {
-            "model": "qwen/qwen3-4b-thinking-2507",
+            # PASO 2: Usar el nuevo identificador de modelo
+            "model": "microsoft/Phi-3-mini-4k-instruct-gguf",
             "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.3,
-            "max_tokens": 400
+            "temperature": 0.2, # Un poco más determinista
+            "max_tokens": 250 # Podemos reducirlo un poco, ya que no habrá <think>
         }
 
-        # PASO 2: Aumentar el timeout a 60 segundos
         async with httpx.AsyncClient(timeout=60.0) as client:
             try:
                 response = await client.post(self.llm_server_url, json=payload)
@@ -31,17 +30,11 @@ Resumen clínico:"""
                 data = response.json()
                 raw_content = data['choices'][0]['message']['content']
 
-                # PASO 3: Implementar el parseo robusto
+                # La lógica de parseo sigue siendo una buena defensa
                 if "Resumen clínico:" in raw_content:
-                    # Toma todo lo que viene después del delimitador
                     summary = raw_content.split("Resumen clínico:", 1)[1].strip()
                 else:
-                    # Si el delimitador no está, intenta usar la respuesta cruda como fallback
-                    # (esto podría incluir el bloque <think>, pero es mejor que fallar)
                     summary = raw_content.strip()
-                
-                # Una capa extra de limpieza por si el modelo añade etiquetas <think> al final
-                summary = summary.split("<think>")[0].strip()
 
                 if not summary:
                      raise HTTPException(status_code=500, detail="El LLM devolvió un resumen vacío después del parseo.")
