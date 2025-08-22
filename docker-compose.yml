@@ -29,6 +29,8 @@ services:
       - "8002:8000"
     volumes:
       - ./services/inference_service:/app
+    env_file:
+      - ./services/inference_service/.env
 
   db:
     image: postgres:15
