@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from ..models.appointment import Appointment as AppointmentModel
 from ..repositories.appointment_repository import AppointmentRepository
-from ..schemas.appointment import AppointmentCreate
+from ..schemas.appointment import AppointmentCreate, AppointmentUpdate # Asegúrate de importar AppointmentUpdate
 
 
 class AppointmentService:
@@ -23,3 +23,8 @@ class AppointmentService:
 
     def get_appointments_for_patient(self, db: Session, patient_id: int) -> List[AppointmentModel]:
         return self.repository.get_by_patient_id(db, patient_id)
+
+    def update_appointment(self, db: Session, appointment_id: int, appointment_update: AppointmentUpdate) -> AppointmentModel:
+        appointment = self.get_appointment(db, appointment_id)
+        update_data = appointment_update.dict(exclude_unset=True)
+        return self.repository.update(db, appointment, update_data)
