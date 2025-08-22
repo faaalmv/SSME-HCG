@@ -38,3 +38,13 @@ async def get_patient_appointments(
     """Retrieve all appointments for a specific patient."""
     # Pass the db session to the service method
     return service.get_appointments_for_patient(db=db, patient_id=patient_id)
+
+@router.patch("/{appointment_id}", response_model=Appointment)
+async def update_appointment_status(
+    appointment_id: int,
+    appointment_update: AppointmentUpdate,
+    db: Session = Depends(get_db),
+    service: AppointmentService = Depends(get_appointment_service)
+):
+    """Update an appointment's status."""
+    return service.update_appointment(db, appointment_id, appointment_update)
