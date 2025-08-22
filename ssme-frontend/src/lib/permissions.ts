@@ -22,6 +22,7 @@ export const permissionsByRole: Record<Role, Permission[]> = {
     PERMISSIONS.VIEW_RECORDS,
     PERMISSIONS.SCHEDULE_APPOINTMENT,
     PERMISSIONS.CANCEL_APPOINTMENT,
+    PERMISSIONS.VIEW_AUDIT_TRAIL, // <-- Añadir nuevo permiso
   ],
   [ROLES.EMPLOYEE]: [
     PERMISSIONS.VIEW_RECORDS,
