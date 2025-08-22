@@ -19,19 +19,38 @@ Resumen clínico:"""
             "model": "qwen/qwen3-4b-thinking-2507",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.3,
-            "max_tokens": 150,
+            "max_tokens": 150
         }
 
-        async with httpx.AsyncClient(timeout=30.0) as client:
+        # PASO 2: Aumentar el timeout a 60 segundos
+        async with httpx.AsyncClient(timeout=60.0) as client:
             try:
                 response = await client.post(self.llm_server_url, json=payload)
                 response.raise_for_status()
-
+                
                 data = response.json()
-                summary = data['choices'][0]['message']['content']
-                return summary.strip()
+                raw_content = data['choices'][0]['message']['content']
 
+                # PASO 3: Implementar el parseo robusto
+                if "Resumen clínico:" in raw_content:
+                    # Toma todo lo que viene después del delimitador
+                    summary = raw_content.split("Resumen clínico:", 1)[1].strip()
+                else:
+                    # Si el delimitador no está, intenta usar la respuesta cruda como fallback
+                    # (esto podría incluir el bloque <think>, pero es mejor que fallar)
+                    summary = raw_content.strip()
+                
+                # Una capa extra de limpieza por si el modelo añade etiquetas <think> al final
+                summary = summary.split("<think>")[0].strip()
+
+                if not summary:
+                     raise HTTPException(status_code=500, detail="El LLM devolvió un resumen vacío después del parseo.")
+
+                return summary
+
+            except httpx.TimeoutException:
+                raise HTTPException(status_code=504, detail="Timeout: El servidor del LLM tardó demasiado en responder.")
             except httpx.RequestError as exc:
                 raise HTTPException(status_code=503, detail=f"Error al contactar el servicio del LLM: {exc}")
-            except (KeyError, IndexError) as exc:
-                raise HTTPException(status_code=500, detail=f"Respuesta inesperada del LLM: {exc}")
+            except (KeyError, IndexError):
+                raise HTTPException(status_code=500, detail="Respuesta inesperada o mal formada del LLM.")
