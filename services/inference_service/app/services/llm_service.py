@@ -22,7 +22,7 @@ Resumen clínico:"""
             "max_tokens": 250 # Podemos reducirlo un poco, ya que no habrá <think>
         }
 
-        async with httpx.AsyncClient(timeout=60.0) as client:
+        async with httpx.AsyncClient(timeout=90.0) as client:
             try:
                 response = await client.post(self.llm_server_url, json=payload)
                 response.raise_for_status()
