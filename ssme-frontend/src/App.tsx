@@ -1,15 +1,19 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { CreateRecordForm } from './components/CreateRecordForm';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Toaster } from 'react-hot-toast';
+import { SymptomInputSection } from './features/clinical-records/components/SymptomInputSection';
+import './index.css'; // Importaremos algunos estilos básicos
 
-// Crear un cliente
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    // Proveer el cliente a tu aplicación
     <QueryClientProvider client={queryClient}>
-      <CreateRecordForm />
+      <div style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '40px auto' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Generador de Resumen Clínico</h1>
+        <SymptomInputSection />
+      </div>
+      <Toaster position="bottom-right" />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
