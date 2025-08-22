@@ -6,11 +6,11 @@ class LLMService:
     def __init__(self, llm_server_url: str):
         self.llm_server_url = llm_server_url
 
-    async def generate_summary(self, text_input: str) -> str:
+    async def generate_summary(self, symptoms: str) -> str:
         # PASO 3: Prompt optimizado para un modelo Instruct como Phi-3
         prompt = f"""<|user|>
 Analiza los siguientes síntomas y genera un único párrafo que los resuma de manera profesional en español. Tu respuesta debe ser únicamente el resumen clínico.
-Síntomas: {text_input}
+Síntomas: {symptoms}
 <|assistant|>
 Resumen clínico:"""
 
