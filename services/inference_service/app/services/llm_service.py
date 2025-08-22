@@ -16,7 +16,7 @@ Resumen clínico:"""
 
         payload = {
             # PASO 2: Usar el nuevo identificador de modelo
-            "model": "microsoft/Phi-3-mini-4k-instruct-gguf",
+            "model": "phi-3-mini-4k-instruct",
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.2, # Un poco más determinista
             "max_tokens": 250 # Podemos reducirlo un poco, ya que no habrá <think>
