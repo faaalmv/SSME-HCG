@@ -21,3 +21,5 @@ export interface SummarizePayload {
 export interface SummarizeResponse {
   summary: string;
 }
+
+export type AllRecordsResponse = ClinicalRecordResponse[];
