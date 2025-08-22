@@ -35,6 +35,7 @@ services:
       - .env
     depends_on:
       - db
+    command: /usr/local/bin/uvicorn app.main:app --host 0.0.0.0 --port 8001
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.clinical-record-service.rule=PathPrefix(`/api/records`)"
@@ -46,6 +47,7 @@ services:
       - ./services/inference_service:/app
     env_file:
       - ./services/inference_service/.env
+    command: /usr/local/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.inference-service.rule=PathPrefix(`/api/inference`)"
