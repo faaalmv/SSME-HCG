@@ -7,7 +7,7 @@ class ClinicalRecordRepository:
 
     def create(self, db: Session, record: ClinicalRecordCreate) -> ClinicalRecord:
         """Create a new clinical record."""
-        db_record = ClinicalRecord(**record.dict())
+        db_record = ClinicalRecord(**record.model_dump())
         db.add(db_record)
         db.commit()
         db.refresh(db_record)
