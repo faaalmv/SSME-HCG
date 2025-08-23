@@ -4,9 +4,9 @@ import { useGetClinicalRecord } from '../hooks/useGetClinicalRecord';
 import { format } from 'date-fns';
 import { useAppointmentModalStore } from '../../../stores/useAppointmentModalStore';
 import { PatientAppointmentsList } from '../../scheduling/components/PatientAppointmentsList'; // Importar el nuevo componente
-import { Can } from './ssme-frontend/src/features/auth/components/Can';
-import { PERMISSIONS } from './ssme-frontend/src/lib/permissions';
-import { RecordAuditTrail } from './ssme-frontend/src/features/audit/components/RecordAuditTrail';
+import { Can } from '../../../features/auth/components/Can';
+import { PERMISSIONS } from '../../../lib/permissions';
+import { RecordAuditTrail } from '../../audit/components/RecordAuditTrail';
 
 // Componente de esqueleto reutilizable para la página de detalle
 const RecordSkeleton = () => (
