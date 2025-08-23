@@ -60,7 +60,7 @@ export const CreateRecordPage = () => {
               />
             </div>
 
-            <SymptomInputSection />
+            <SymptomInputSection symptoms={symptoms} setSymptoms={setSymptoms} aiSummary={aiSummary} setAiSummary={setAiSummary} isSummarizing={isSummarizing} setIsSummarizing={setIsSummarizing} />
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <button

@@ -18,7 +18,7 @@ export const useSummarizeSymptoms = (setAiSummary: (summary: string) => void, se
     },
     onSuccess: (data) => {
       // 2. En caso de éxito, actualiza el campo del store y notifica
-      setField('aiSummary', data.summary);
+      setAiSummary(data.summary);
       toast.success('Resumen generado por IA.');
     },
     onError: (error) => {
