@@ -5,14 +5,16 @@ services:
     image: traefik:v2.10
     command:
       - --api.insecure=true
-      - --providers.docker
+      - --providers.docker=true
+      - --providers.file.directory=/etc/traefik/
+      - --providers.file.watch=true
       - --entrypoints.web.address=:80
     ports:
       - "8888:80"
-      - "8443:443"
       - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik:/etc/traefik:ro
 
   user-service:
     build: ./services/user_service
@@ -25,11 +27,6 @@ services:
         condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.user-service.rule=Host(`localhost`) && PathPrefix(`/api/users`)"
-      - "traefik.http.routers.user-service.service=user-service"
-      - "traefik.http.services.user-service.loadbalancer.server.port=8000" 
 
   clinical-record-service:
     build: ./services/clinical_record_service
@@ -42,11 +39,6 @@ services:
         condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.clinical-record-service.rule=Host(`localhost`) && PathPrefix(`/api/records`)"
-      - "traefik.http.routers.clinical-record-service.service=clinical-record-service"
-      - "traefik.http.services.clinical-record-service.loadbalancer.server.port=8000"
 
   inference-service:
     build: ./services/inference_service
@@ -58,14 +50,9 @@ services:
       db:
         condition: service_healthy
     environment:
-      - LLM_SERVER_URL=${LLM_SERVER_URL} # Añade esta línea
+      - LLM_SERVER_URL=${LLM_SERVER_URL}
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.inference-service.rule=Host(`localhost`) && PathPrefix(`/api/inference`)"
-      - "traefik.http.routers.inference-service.service=inference-service"
-      - "traefik.http.services.inference-service.loadbalancer.server.port=8000"
 
   scheduling-service:
     build: ./services/scheduling_service
@@ -78,11 +65,6 @@ services:
         condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.scheduling-service.rule=Host(`localhost`) && PathPrefix(`/api/appointments`)"
-      - "traefik.http.routers.scheduling-service.service=scheduling-service"
-      - "traefik.http.services.scheduling-service.loadbalancer.server.port=8000"
 
   db:
     image: postgres:15

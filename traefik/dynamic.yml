@@ -1,0 +1,41 @@
+# traefik/dynamic.yml
+http:
+  routers:
+    user-service-router:
+      rule: "Host(`localhost`) && PathPrefix(`/api/users`)"
+      service: "user-service"
+      entryPoints:
+        - web
+    clinical-record-service-router:
+      rule: "Host(`localhost`) && PathPrefix(`/api/records`)"
+      service: "clinical-record-service"
+      entryPoints:
+        - web
+    scheduling-service-router:
+      rule: "Host(`localhost`) && PathPrefix(`/api/appointments`)"
+      service: "scheduling-service"
+      entryPoints:
+        - web
+    inference-service-router:
+      rule: "Host(`localhost`) && PathPrefix(`/api/inference`)"
+      service: "inference-service"
+      entryPoints:
+        - web
+
+  services:
+    user-service:
+      loadBalancer:
+        servers:
+          - url: "http://user-service:8000"
+    clinical-record-service:
+      loadBalancer:
+        servers:
+          - url: "http://clinical-record-service:8000"
+    scheduling-service:
+      loadBalancer:
+        servers:
+          - url: "http://scheduling-service:8000"
+    inference-service:
+      loadBalancer:
+        servers:
+          - url: "http://inference-service:8000"
