@@ -37,7 +37,7 @@ cp .env.example .env
 sudo docker compose up --build
 ```
 
-La API estará disponible a través del gateway en http://localhost:80.
+La API estará disponible a través del gateway en http://localhost:8888.
 
 ### 2. Configuración del Frontend
 
