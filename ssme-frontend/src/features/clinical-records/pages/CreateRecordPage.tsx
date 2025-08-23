@@ -48,7 +48,7 @@ export const CreateRecordPage = () => {
                 id="patientName"
                 type="text"
                 value={patientName}
-                onChange={(e) => setField('patientName', e.target.value)}
+                onChange={(e) => setPatientName(e.target.value)}
                 style={{ width: '100%', padding: '0.5rem', border: '1px solid #ccc', borderRadius: '0.25rem' }}
                 required
               />
