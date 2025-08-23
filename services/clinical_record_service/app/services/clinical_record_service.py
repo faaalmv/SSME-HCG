@@ -4,7 +4,7 @@ from app.repositories.clinical_record_repository import ClinicalRecordRepository
 from app.repositories.audit_log_repository import AuditLogRepository
 from app.schemas.clinical_record import ClinicalRecordCreate, ClinicalRecord
 from app.schemas.audit_log import AuditLogCreate
-from app.models.audit_log import AuditAction
+from app.models.audit_log import AuditAction, AuditLog
 
 class ClinicalRecordService:
     """Service for clinical record related business logic."""
