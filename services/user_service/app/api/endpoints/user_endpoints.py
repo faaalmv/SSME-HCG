@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.database import get_db
+from app import models
 from app.services.user_service import UserService
 from app.repositories.user_repository import UserRepository
 from app.schemas.user import User, UserCreate, Token, RefreshRequest
@@ -34,3 +35,11 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 def refresh_access_token(request: RefreshRequest, db: Session = Depends(get_db)):
     """Refreshes an access token."""
     return user_service.refresh_token(db, token=request.refresh_token)
+
+@router.get("/", response_model=list[User])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """
+    Retrieve all users.
+    """
+    users = db.query(models.User).offset(skip).limit(limit).all()
+    return users
