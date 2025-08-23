@@ -7,7 +7,7 @@ class AuditLogRepository:
 
     def create(self, db: Session, log: AuditLogCreate) -> AuditLog:
         """Create a new audit log."""
-        db_log = AuditLog(**log.dict())
+        db_log = AuditLog(**log.model_dump())
         db.add(db_log)
         db.commit()
         db.refresh(db_log)

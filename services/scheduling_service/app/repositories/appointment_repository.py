@@ -8,7 +8,7 @@ from ..schemas.appointment import AppointmentCreate
 
 class AppointmentRepository:
     def create(self, db: Session, appointment: AppointmentCreate) -> AppointmentModel:
-        db_appointment = AppointmentModel(**appointment.dict())
+        db_appointment = AppointmentModel(**appointment.model_dump())
         db.add(db_appointment)
         db.commit()
         db.refresh(db_appointment)

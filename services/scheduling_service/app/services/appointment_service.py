@@ -27,7 +27,7 @@ class AppointmentService:
 
     def update_appointment(self, db: Session, appointment_id: int, appointment_update: AppointmentUpdate) -> AppointmentModel:
         appointment = self.get_appointment(db, appointment_id)
-        update_data = appointment_update.dict(exclude_unset=True)
+        update_data = appointment_update.model_dump(exclude_unset=True)
         return self.repository.update(db, appointment, update_data)
 
     def get_upcoming_appointments_for_user(self, db: Session, user_id: int, limit: int) -> List[AppointmentModel]:
