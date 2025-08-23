@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-            - "traefik.http.routers.user-service.rule=Host(`localhost`) && PathPrefix(`/api/users`)"
+      - "traefik.http.routers.user-service.rule=Host(`localhost`) && PathPrefix(`/api/users`)"
       - "traefik.http.routers.user-service.service=user-service"
       - "traefik.http.services.user-service.loadbalancer.server.port=8000" 
 
