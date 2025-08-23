@@ -25,3 +25,6 @@ class Token(BaseModel):
     refresh_token: str
     token_type: str
     user: User
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
