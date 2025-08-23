@@ -2,8 +2,8 @@ import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGetClinicalRecord } from '../hooks/useGetClinicalRecord';
 import { format } from 'date-fns';
-import { useAppointmentModalStore } from './ssme-frontend/src/stores/useAppointmentModalStore';
-import { PatientAppointmentsList } from './ssme-frontend/src/features/scheduling/components/PatientAppointmentsList'; // Importar el nuevo componente
+import { useAppointmentModalStore } from '../../../stores/useAppointmentModalStore';
+import { PatientAppointmentsList } from '../../scheduling/components/PatientAppointmentsList'; // Importar el nuevo componente
 import { Can } from './ssme-frontend/src/features/auth/components/Can';
 import { PERMISSIONS } from './ssme-frontend/src/lib/permissions';
 import { RecordAuditTrail } from './ssme-frontend/src/features/audit/components/RecordAuditTrail';
