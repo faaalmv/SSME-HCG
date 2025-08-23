@@ -22,7 +22,13 @@ export const CreateRecordPage = () => {
     mutate({
       patient_name: patientName,
       patient_id: `PID-${Date.now()}`, // Placeholder
-      notes: symptoms,
+      notes: aiSummary || symptoms,
+    }, {
+      onSuccess: () => {
+        setPatientName('');
+        setSymptoms('');
+        setAiSummary('');
+      }
     });
   };
 
