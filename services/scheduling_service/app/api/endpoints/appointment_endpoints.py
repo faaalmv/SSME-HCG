@@ -31,7 +31,7 @@ async def create_appointment(
 
 @router.get("/patient/{patient_id}", response_model=List[Appointment])
 async def get_patient_appointments(
-    patient_id: int,
+    patient_id: str,
     db: Session = Depends(get_db), # Inject db directly here
     service: AppointmentService = Depends(get_appointment_service)
 ):
