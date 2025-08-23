@@ -24,6 +24,7 @@ services:
       db:
         condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.user-service.rule=PathPrefix(`/api/users`)"
@@ -39,6 +40,7 @@ services:
       db:
         condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.clinical-record-service.rule=PathPrefix(`/api/records`)"
@@ -51,6 +53,7 @@ services:
     env_file:
       - ./services/inference_service/.env
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.inference-service.rule=PathPrefix(`/api/inference`)"
@@ -66,6 +69,7 @@ services:
       db:
         condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.scheduling-service.rule=PathPrefix(`/api/appointments`)"
