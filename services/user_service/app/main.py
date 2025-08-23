@@ -4,6 +4,10 @@ from .api.endpoints import user_endpoints
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="User Service")
 
-app.include_router(user_endpoints.router, prefix="/users", tags=["users"])
+app.include_router(user_endpoints.router)
+
+@app.get("/")
+def read_root():
+    return {"message": "User Service is running"}
