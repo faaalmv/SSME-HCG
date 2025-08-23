@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import apiClient from '../../../lib/axios';
 import { ClinicalRecordResponse } from '../../../types/api';
 
-const fetchRecord = async (recordId: string): Promise<ClinicalRecordResponse> => {
+const fetchRecord = async (recordId: number): Promise<ClinicalRecordResponse> => {
   // Simular el ID de personal médico requerido por el endpoint actual
   const { data } = await apiClient.get(`/api/records/${recordId}`, {
       params: {
