@@ -2,3 +2,4 @@ python-jose[cryptography]
 python-multipart
 uvicorn
 fastapi
+sqlalchemy
