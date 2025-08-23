@@ -6,7 +6,10 @@ import { useDebounce } from '../../../hooks/useDebounce';
 import { AIAnalysisPanel } from '../../inference/components/AIAnalysisPanel';
 
 export const CreateRecordPage = () => {
-  const { patientName, symptoms, setField } = useClinicalRecordFormStore();
+  const [patientName, setPatientName] = useState('');
+  const [symptoms, setSymptoms] = useState('');
+  const [aiSummary, setAiSummary] = useState('');
+  const [isSummarizing, setIsSummarizing] = useState(false);
   const { mutate, isPending } = useCreateClinicalRecord();
   const debouncedSymptoms = useDebounce(symptoms, 750); // Debounce de 750ms
 
