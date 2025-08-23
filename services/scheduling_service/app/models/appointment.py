@@ -14,7 +14,7 @@ class Appointment(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     patient_id = Column(String, index=True) # Cambiado a String por consistencia
-    clinical_record_id = Column(Integer, ForeignKey("clinical_records.id"))
+    clinical_record_id = Column(Integer, nullable=False)
     medical_staff_id = Column(Integer, index=True, nullable=True)
     
     appointment_time = Column(DateTime, nullable=False) # Campo unificado para la fecha y hora
