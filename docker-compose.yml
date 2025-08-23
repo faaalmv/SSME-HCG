@@ -23,8 +23,8 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
 
@@ -35,8 +35,8 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
 
@@ -47,8 +47,8 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
     environment:
       - LLM_SERVER_URL=${LLM_SERVER_URL}
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
@@ -61,10 +61,17 @@ services:
     env_file:
       - .env
     depends_on:
-      db:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     restart: unless-stopped
+
+  db-init:
+    build: ./services/user_service # Or any service that has all models
+    command: python -c "from app.database import engine, Base; from app.models import user; Base.metadata.create_all(bind=engine)"
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15

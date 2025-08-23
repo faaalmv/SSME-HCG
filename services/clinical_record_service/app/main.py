@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from .database import engine, Base
 from .api.endpoints import clinical_record_endpoints, audit_endpoints # Importar el nuevo router
 
-Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
 

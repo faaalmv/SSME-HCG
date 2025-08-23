@@ -4,9 +4,7 @@ from .api.endpoints import appointment_endpoints
 
 app = FastAPI()
 
-@app.on_event("startup")
-async def startup_event():
-    Base.metadata.create_all(bind=engine)
+
 
 app.include_router(appointment_endpoints.router, prefix="/appointments", tags=["appointments"])
 
