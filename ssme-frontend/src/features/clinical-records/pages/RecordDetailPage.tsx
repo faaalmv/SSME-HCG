@@ -63,7 +63,7 @@ export const RecordDetailPage = () => {
             </p>
             <div style={{ padding: '1.5rem', backgroundColor: '#f9fafb', borderRadius: '0.5rem' }}>
               <h2 style={{ fontWeight: '700', marginBottom: '0.5rem', fontSize: '1.125rem' }}>Notas Clínicas / Resumen</h2>
-              <p style={{ color: '#374151', whiteSpace: 'pre-wrap' }}>{record.notes}</p>
+              <p style={{ color: '#374151', whiteSpace: 'pre-wrap' }}>{record.notes || 'No hay notas para este expediente.'}</p>
             </div>
 
             {/* SECCIÓN DE CITAS ACTUALIZADA */}

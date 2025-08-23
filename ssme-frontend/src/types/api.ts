@@ -2,14 +2,14 @@
 export interface CreateClinicalRecordPayload {
   patient_name: string;
   patient_id: string;
-  notes: string; // Resumen final (AI o manual)
+  notes: string | null; // Resumen final (AI o manual)
 }
 
 export interface ClinicalRecordResponse {
   id: number;
   patient_name: string;
   patient_id: string;
-  notes: string;
+  notes: string | null;
   created_at: string; // ISO 8601 date string
 }
 
