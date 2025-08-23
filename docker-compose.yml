@@ -42,7 +42,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.clinical-record-service.rule=PathPrefix(`/api/records`)"
-      - "traefik.http.services.clinical-record-service.loadbalancer.server.port=8000
+      - "traefik.http.services.clinical-record-service.loadbalancer.server.port=8000"
 
   inference-service:
     build: ./services/inference_service
