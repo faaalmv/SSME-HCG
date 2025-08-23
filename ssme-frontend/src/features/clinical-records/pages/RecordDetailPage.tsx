@@ -4,7 +4,7 @@ import { useGetClinicalRecord } from '../hooks/useGetClinicalRecord';
 import { format } from 'date-fns';
 import { useAppointmentModalStore } from '../../../stores/useAppointmentModalStore';
 import { PatientAppointmentsList } from '../../scheduling/components/PatientAppointmentsList'; // Importar el nuevo componente
-import { Can } from '../../../features/auth/components/Can';
+import { Can } from '../../auth/components/Can';
 import { PERMISSIONS } from '../../../lib/permissions';
 import { RecordAuditTrail } from '../../audit/components/RecordAuditTrail';
 
