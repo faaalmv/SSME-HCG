@@ -27,7 +27,7 @@ export const SymptomInputSection = ({ symptoms, setSymptoms, aiSummary, setAiSum
       <textarea
         id="symptoms-textarea"
         value={symptoms}
-        onChange={(e) => setField('symptoms', e.target.value)}
+        onChange={(e) => setSymptoms(e.target.value)}
         placeholder="Describa los síntomas del paciente..."
         style={{ width: '100%', minHeight: '120px', padding: '0.5rem', border: '1px solid #cbd5e0', borderRadius: '0.25rem' }}
       />
