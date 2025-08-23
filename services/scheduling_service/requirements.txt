@@ -1,2 +1,10 @@
+# requirements.txt (para user, clinical-record, y scheduling)
 
+fastapi
+uvicorn[standard]
+sqlalchemy
 psycopg2-binary
+pydantic[email]
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
