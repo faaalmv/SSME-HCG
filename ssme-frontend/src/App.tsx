@@ -4,7 +4,7 @@ import { RegisterPage } from './features/auth/pages/RegisterPage';
 import { DashboardPage } from './features/dashboard/pages/DashboardPage';
 import { RecordsListPage } from './features/clinical-records/pages/RecordsListPage';
 import { CreateRecordPage } from './features/clinical-records/pages/CreateRecordPage';
-import RecordDetailPage from '../../../RecordDetailPage'; // Corrected path
+import { RecordDetailPage } from './features/clinical-records/pages/RecordDetailPage';
 import { ProtectedRoute } from './router/ProtectedRoute';
 import { ROLES } from './lib/permissions';
 
