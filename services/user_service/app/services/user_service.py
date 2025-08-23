@@ -24,7 +24,7 @@ class UserService:
         if not db_user or not verify_password(password, db_user.hashed_password):
             return None
         
-        token_data = {"sub": db_user.email, "role": db_user.role.value}
+        token_data = {"sub": db_user.email, "role": db_user.role.value, "user_id": db_user.id}
         access_token = create_access_token(data=token_data)
         refresh_token = create_refresh_token(data=token_data)
 
