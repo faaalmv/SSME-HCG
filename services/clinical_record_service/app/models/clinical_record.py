@@ -1,7 +1,7 @@
 import enum
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum, Text, JSON, ForeignKey
 from sqlalchemy.sql import func
-from app.database import Base
+from ..database import Base
 
 class ClinicalRecord(Base):
     __tablename__ = "clinical_records"

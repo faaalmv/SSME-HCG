@@ -1,7 +1,7 @@
 import enum
 from sqlalchemy import Column, Integer, DateTime, Enum, ForeignKey
 from sqlalchemy.sql import func
-from .database import Base
+from ..database import Base
 
 class AuditAction(enum.Enum):
     READ = "read"
