@@ -17,7 +17,7 @@ class AppointmentRepository:
     def get_by_id(self, db: Session, appointment_id: int) -> Optional[AppointmentModel]:
         return db.query(AppointmentModel).filter(AppointmentModel.id == appointment_id).first()
 
-    def get_by_patient_id(self, db: Session, patient_id: int) -> List[AppointmentModel]:
+    def get_by_patient_id(self, db: Session, patient_id: str) -> List[AppointmentModel]:
         return db.query(AppointmentModel).filter(AppointmentModel.patient_id == patient_id).all()
 
     def update(self, db: Session, appointment: AppointmentModel, update_data: dict) -> AppointmentModel:
