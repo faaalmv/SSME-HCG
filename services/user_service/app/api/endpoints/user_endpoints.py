@@ -7,17 +7,17 @@ from app.services.user_service import UserService
 from app.repositories.user_repository import UserRepository
 from app.schemas.user import User, UserCreate, Token, RefreshRequest
 
-router = APIRouter()
+user_router = APIRouter()
 
 user_repository = UserRepository()
 user_service = UserService(user_repository)
 
-@router.post("/", response_model=User, status_code=201)
+@user_router.post("/", response_model=User, status_code=201)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     """Create a new user."""
     return user_service.create_user(db=db, user=user)
 
-@router.post("/login", response_model=Token)
+@user_router.post("/login", response_model=Token)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """Logs in a user and returns a JWT token."""
     # Nota: OAuth2PasswordRequestForm usa 'username', lo mapeamos a 'email'
@@ -31,12 +31,12 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     return auth_data
 
 # --- NUEVO ENDPOINT DE REFRESH ---
-@router.post("/refresh")
+@user_router.post("/refresh")
 def refresh_access_token(request: RefreshRequest, db: Session = Depends(get_db)):
     """Refreshes an access token."""
     return user_service.refresh_token(db, token=request.refresh_token)
 
-@router.get("/", response_model=list[User])
+@user_router.get("/", response_model=list[User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     """
     Retrieve all users.
