@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 import apiClient from '../../../lib/axios';
-import { useClinicalRecordFormStore } from '../../../stores/useClinicalRecordFormStore';
 import { SummarizePayload, SummarizeResponse } from '../../../types/api';
 import { toast } from 'react-hot-toast';
 
@@ -9,8 +8,7 @@ const summarizeSymptoms = async (payload: SummarizePayload): Promise<SummarizeRe
   return data;
 };
 
-export const useSummarizeSymptoms = () => {
-  const { setField, setIsSummarizing } = useClinicalRecordFormStore();
+export const useSummarizeSymptoms = (setAiSummary: (summary: string) => void, setIsSummarizing: (isSummarizing: boolean) => void) => {
 
   return useMutation({
     mutationFn: summarizeSymptoms,
