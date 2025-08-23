@@ -1,19 +1,18 @@
-import enum
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum
-from sqlalchemy.sql import func
-from app.database import Base
+# user-service/app/models.py
 
-class UserRole(enum.Enum):
-    EMPLOYEE = "employee"
-    MEDICAL_STAFF = "medical_staff"
+from sqlalchemy import Column, Integer, String, Boolean, Enum as SQLAlchemyEnum
+from .database import Base
+import enum
+
+class UserRole(str, enum.Enum):
+    employee = "employee"
+    medical_staff = "medical_staff"
 
 class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    role = Column(Enum(UserRole))
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=func.utcnow())
-    updated_at = Column(DateTime, default=func.utcnow(), onupdate=func.utcnow())
+    role = Column(SQLAlchemyEnum(UserRole), nullable=False)
