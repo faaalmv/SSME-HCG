@@ -50,6 +50,11 @@ services:
     build: ./services/inference_service
     volumes:
       - ./services/inference_service:/app
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       - LLM_SERVER_URL=${LLM_SERVER_URL} # Añade esta línea
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
