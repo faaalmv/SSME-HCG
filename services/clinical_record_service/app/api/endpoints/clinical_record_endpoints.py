@@ -7,6 +7,7 @@ from app.repositories.clinical_record_repository import ClinicalRecordRepository
 from app.repositories.audit_log_repository import AuditLogRepository
 from app.schemas.clinical_record import ClinicalRecord, ClinicalRecordCreate
 from app.schemas.audit_log import AuditLog # Importar el esquema de AuditLog
+from services.user_service.app.security import get_current_user_id # Import get_current_user_id
 
 router = APIRouter()
 
@@ -28,21 +29,27 @@ def get_record_audit_trail(record_id: int, db: Session = Depends(get_db)):
 
 # ... (endpoints existentes de crear y obtener por id) ...
 @router.post("/", response_model=ClinicalRecord, status_code=201)
-def create_record(record: ClinicalRecordCreate, medical_staff_id: int, db: Session = Depends(get_db)):
+def create_record(
+    record: ClinicalRecordCreate,
+    db: Session = Depends(get_db),
+    medical_staff_id: int = Depends(get_current_user_id) # Use get_current_user_id
+):
     """
     Create a new clinical record.
 
-    **Note:** `medical_staff_id` is temporarily passed as a query parameter for simulation.
-    In a real-world scenario, it would be extracted from a JWT token.
+    **Note:** `medical_staff_id` is now extracted from the JWT token.
     """
     return clinical_record_service.create_clinical_record(db=db, record_create=record, medical_staff_id=medical_staff_id)
 
 @router.get("/{record_id}", response_model=ClinicalRecord)
-def get_record(record_id: int, medical_staff_id: int, db: Session = Depends(get_db)):
+def get_record(
+    record_id: int,
+    db: Session = Depends(get_db),
+    medical_staff_id: int = Depends(get_current_user_id) # Use get_current_user_id
+):
     """
     Get a clinical record by its ID.
 
-    **Note:** `medical_staff_id` is temporarily passed as a query parameter for simulation.
-    In a real-world scenario, it would be extracted from a JWT token.
+    **Note:** `medical_staff_id` is now extracted from the JWT token.
     """
     return clinical_record_service.get_record_by_id(db=db, record_id=record_id, medical_staff_id=medical_staff_id)

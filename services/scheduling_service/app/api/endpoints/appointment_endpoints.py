@@ -6,6 +6,7 @@ from ...database import get_db
 from ...services.appointment_service import AppointmentService
 from ...repositories.appointment_repository import AppointmentRepository
 from ...schemas.appointment import Appointment, AppointmentCreate, AppointmentUpdate
+from services.user_service.app.security import get_current_user_id # Import get_current_user_id
 
 
 router = APIRouter()
@@ -54,10 +55,8 @@ async def update_appointment_status(
 def get_my_upcoming_appointments(
     limit: int = 5,
     db: Session = Depends(get_db),
-    service: AppointmentService = Depends(get_appointment_service)
+    service: AppointmentService = Depends(get_appointment_service),
+    current_user_id: int = Depends(get_current_user_id) # Use get_current_user_id
 ):
     """Retrieve the next upcoming appointments for the current user."""
-    # NOTA: El user_id está hardcodeado. En una implementación real,
-    # se extraería de un token JWT decodificado.
-    current_user_id = 1 
     return service.get_upcoming_appointments_for_user(db=db, user_id=current_user_id, limit=limit)
