@@ -12,7 +12,7 @@ const statusStyles: { [key: string]: string } = {
 
 const getStatusText = (status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED') => {
     switch(status) {
-        case 'SCHEDULEED': return 'Agendada';
+        case 'SCHEDULED': return 'Agendada';
         case 'COMPLETED': return 'Completada';
         case 'CANCELLED': return 'Cancelada';
         default: return status;

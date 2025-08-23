@@ -20,7 +20,7 @@ export const useCreateAppointment = () => {
       const previousAppointments = queryClient.getQueryData<AppointmentResponse[]>(queryKey);
 
       const optimisticAppointment: AppointmentResponse = {
-        id: Date.now(), // ID temporal único
+        id: `optimistic-${Date.now()}`, // ID temporal único
         status: 'SCHEDULED',
         ...newAppointment,
       };
