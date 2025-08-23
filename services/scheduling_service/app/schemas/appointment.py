@@ -12,6 +12,13 @@ class AppointmentBase(BaseModel):
 class AppointmentCreate(AppointmentBase):
     pass
 
+class AppointmentUpdate(AppointmentBase):
+    patient_id: Optional[str] = None
+    clinical_record_id: Optional[int] = None
+    appointment_time: Optional[datetime] = None
+    reason: Optional[str] = None
+    status: Optional[AppointmentStatus] = None
+
 class Appointment(AppointmentBase):
     id: int
     medical_staff_id: Optional[int] = None
