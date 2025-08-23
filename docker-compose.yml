@@ -27,8 +27,9 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user-service.rule=Host(`localhost`) && PathPrefix(`/api/users`)"
-      - "traefik.http.services.user-service.loadbalancer.server.port=8000"
+            - "traefik.http.routers.user-service.rule=Host(`localhost`) && PathPrefix(`/api/users`)"
+      - "traefik.http.routers.user-service.service=user-service"
+      - "traefik.http.services.user-service.loadbalancer.server.port=8000" 
 
   clinical-record-service:
     build: ./services/clinical_record_service
@@ -44,6 +45,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.clinical-record-service.rule=Host(`localhost`) && PathPrefix(`/api/records`)"
+      - "traefik.http.routers.clinical-record-service.service=clinical-record-service"
       - "traefik.http.services.clinical-record-service.loadbalancer.server.port=8000"
 
   inference-service:
@@ -62,6 +64,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.inference-service.rule=Host(`localhost`) && PathPrefix(`/api/inference`)"
+      - "traefik.http.routers.inference-service.service=inference-service"
       - "traefik.http.services.inference-service.loadbalancer.server.port=8000"
 
   scheduling-service:
@@ -78,6 +81,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.scheduling-service.rule=Host(`localhost`) && PathPrefix(`/api/appointments`)"
+      - "traefik.http.routers.scheduling-service.service=scheduling-service"
       - "traefik.http.services.scheduling-service.loadbalancer.server.port=8000"
 
   db:
