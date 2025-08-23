@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useClinicalRecordFormStore } from '../../../stores/useClinicalRecordFormStore';
+import { useState } from 'react';
 import { useCreateClinicalRecord } from '../hooks/useCreateClinicalRecord';
 import { SymptomInputSection } from '../components/SymptomInputSection';
 import { useDebounce } from '../../../hooks/useDebounce';
