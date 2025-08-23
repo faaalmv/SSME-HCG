@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useClinicalRecordFormStore } from '../../../stores/useClinicalRecordFormStore';
 import { useSummarizeSymptoms } from '../hooks/useSummarizeSymptoms';
 
 // Componente de esqueleto de carga con animaciones
@@ -11,7 +10,7 @@ const SummarySkeleton = () => (
   </div>
 );
 
-export const SymptomInputSection = () => {
+export const SymptomInputSection = ({ symptoms, setSymptoms, aiSummary, setAiSummary, isSummarizing, setIsSummarizing }) => {
   const { symptoms, aiSummary, isSummarizing, setField } = useClinicalRecordFormStore();
   const { mutate } = useSummarizeSymptoms();
 
